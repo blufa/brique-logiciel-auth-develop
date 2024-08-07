@@ -1,0 +1,18 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: auth-service
+  config:
+    import: "optional:consul:"
+  cloud:
+    consul:
+      config:
+        enabled: true
+        name: ${spring.application.name}
+        format: yaml
+      host: ${SPRING_CLOUD_DISCOVERY_HOST:localhost}
+      port: ${SPRING_CLOUD_DISCOVERY_PORT:8500}
+      discovery:
+        instance-id: ${spring.application.name}-${spring.port}-${random.int[1,99]}
+        service-name: ${spring.application.name}
